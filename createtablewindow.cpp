@@ -7,6 +7,8 @@ CreateTableWindow::CreateTableWindow(Database *database, QWidget *parent) :
     m_database(database)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()|Qt::Window);
+    connect(ui->confirmButton, &QPushButton::clicked, this, &CreateTableWindow::on_createTableButton_clicked);
 }
 
 CreateTableWindow::~CreateTableWindow()

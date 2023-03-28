@@ -16,11 +16,12 @@ MainWindow::~MainWindow()
 void MainWindow::on_loginButton_clicked()
 {
     QString host = ui->hostLineEdit->text();
+    QString port = ui->Port->text();
     QString username = ui->usernameLineEdit->text();
     QString password = ui->passwordLineEdit->text();
     QString databaseName = ui->databaseNameLineEdit->text();
-
-    if (m_database->connectToDatabase(host, username, password, databaseName)) {
+    int p = port.toInt();
+    if (m_database->connectToDatabase(host,p, username, password, databaseName)) {
         emit loginSuccess();
         this->hide();
     } else {

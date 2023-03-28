@@ -4,12 +4,13 @@
 
 Database::Database(QObject *parent) : QObject(parent)
 {
-    m_database = QSqlDatabase::addDatabase("QMYSQL");
+    m_database = QSqlDatabase::addDatabase("QODBC");
 }
 
-bool Database::connectToDatabase(const QString &host, const QString &username, const QString &password, const QString &databaseName)
+bool Database::connectToDatabase(const QString &host, const int &port, const QString &username, const QString &password, const QString &databaseName)
 {
     m_database.setHostName(host);
+    m_database.setPort(port);
     m_database.setUserName(username);
     m_database.setPassword(password);
     m_database.setDatabaseName(databaseName);
@@ -69,21 +70,11 @@ bool Database::insertData(const QString &tableName, const QMap<QString, QVariant
     }
 }
 
-bool Database::updateData(const QString &tableName, const QMap<QString, QVariant> &data, const QString &where)
-{
+bool Database::updateData(const QString& tableName, const QString& condition, const QString& newData) {
     QSqlQuery query;
-    QString queryString = QString("UPDATE %1 SET ").arg(tableName);
+    QString updateQueryStr = QString("UPDATE %1 SET %2 WHERE %3").arg(tableName, newData, condition);
 
-    for (auto it = data.begin(); it != data.end(); ++it) {
-        queryString.append(QString("%1 = '%2',").arg(it.key(),it.value().toString()));
-    }
-    queryString.chop(1);
-
-    if (!where.isEmpty()) {
-        queryString.append(" WHERE " + where);
-    }
-
-    if (query.exec(queryString)) {
+    if (query.exec(updateQueryStr)) {
         qDebug() << "Data updated.";
         return true;
     } else {

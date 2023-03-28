@@ -3,11 +3,6 @@
 
 #include <QWidget>
 #include "database.h"
-#include "createtablewindow.h"
-#include "insertdatawindow.h"
-#include "updatedatawindow.h"
-#include "deletedatawindow.h"
-#include "querydatawindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class HomeWindow;}
