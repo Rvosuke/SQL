@@ -52,14 +52,14 @@ bool Database::insertData(const QString &tableName, const QMap<QString, QVariant
 
     for (auto it = data.begin(); it != data.end(); ++it) {
         keys.append(QString("%1,").arg(it.key()));
-        values.append(QString("'%1',").arg(it.value().toString()));
+        values.append(QString("%1,").arg(it.value().toString()));
     }
     keys.chop(1);
     values.chop(1);
     keys.append(")");
     values.append(")");
 
-    QString queryString = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(tableName, keys, values);
+    QString queryString = QString("INSERT INTO %1 %2 VALUES %3").arg(tableName, keys, values);
 
     if (query.exec(queryString)) {
         qDebug() << "Data inserted.";

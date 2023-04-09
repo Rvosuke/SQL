@@ -8,6 +8,7 @@ UpdateDataWindow::UpdateDataWindow(Database* database, QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags()|Qt::Window);
+    connect(ui->pushButton, &QPushButton::clicked, this, &UpdateDataWindow::on_updateDataButton_clicked);
 }
 
 UpdateDataWindow::~UpdateDataWindow()
